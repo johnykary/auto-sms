@@ -8,6 +8,7 @@ target 'autoSms' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'autoSmsTests' do
     inherit! :complete
     # Pods for testing

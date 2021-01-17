@@ -1,5 +1,7 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Alert, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Header from './components/Header';
 import UsersDataPlacehoder from './components/UsersDataPlacehoder';
 import CodesList from './components/codesList';
@@ -37,25 +39,58 @@ const App = () =>{
   }
 
   
-  const saveInfo = userInfo => {
+  //Save UserData
+  const storeData = async (userData) => {
+    try {
+      const jsonUserData = JSON.stringify(userData)
+
+      //Update if exists or set
+      const update = await AsyncStorage.mergeItem('@storage_Key2', jsonUserData);
+      if(update === null){
+        await AsyncStorage.setItem('@storage_Key2', jsonUserData)
+      }
+    } catch (e) {
+      // saving error
+    }
+  }
+
+  //Retrive UserData
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@storage_Key2');
+      if(jsonValue){
+        setUserData(jsonValue);
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  
+  const saveInfo = async (userInfo) => {
     if(!userInfo){
       console.log('empty')
     }else{
       //Here should save to local and to state
-      userData.name = userInfo.name
+      userData.name = userInfo.name;
       userData.addr = userInfo.addr;
+    
+      await storeData(userData);
+
       setUserData(userData)
     }
-  }
-
-  const isSaveButtonDisabled = () => {
-    return (userData.name === '' || userData.addr === '' || selectedCode === undefined );
   }
 
   return(
     <View style={styles.container}>
       <Header title='Sms στο 13033'/>
-      <UsersDataPlacehoder saveInfo = {saveInfo}/>
+      <UsersDataPlacehoder saveInfo = {saveInfo} userData={userData}/>
       <FlatList
          data = {codes}
          renderItem= {({item}) => <CodesList code={item} selectCode = {selectCode} />} 

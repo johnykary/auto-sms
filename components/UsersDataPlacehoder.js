@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 
-const UsersDataPlacehoder = ({saveInfo}) =>{
+const UsersDataPlacehoder = ({saveInfo, userData}) =>{
 
   const[name, setName] = useState('');
   const[addr, setAddr] = useState('');
@@ -19,19 +19,17 @@ const UsersDataPlacehoder = ({saveInfo}) =>{
     return name === '' || addr === ''
   }
 
-
   return(
     <View >
-      <TextInput placeholder='Ονοματεπώνυμο' style={styles.nameInput} onChangeText = {onChangeName}></TextInput>
-      <TextInput placeholder='Διεύθυνση' style={styles.streetInput} onChangeText = {onChangeAddr}></TextInput>
+      <TextInput placeholder='Ονοματεπώνυμο' style={styles.nameInput} onChangeText = {onChangeName} defaultValue={userData.name}></TextInput>
+      <TextInput placeholder='Διεύθυνση' style={styles.streetInput} onChangeText = {onChangeAddr} defaultValue={userData.addr}></TextInput>
       <TouchableOpacity 
         style={[styles.btn, , { opacity: isDisabled() ? 0.3 : 1 }]}
         onPress = {() => saveInfo({
           name, addr
         })}
         disabled = {isDisabled()}>
-            <Text style={styles.btnText}>Αποθήκευση 
-            </Text>
+            <Text style={styles.btnText}>ΑΠΟΘΗΚΕΥΣΗ</Text>
         </TouchableOpacity>
     </View>
   )

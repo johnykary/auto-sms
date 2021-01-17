@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import { StyleSheet, TouchableOpacity,  Linking, Platform, Alert } from 'react-native';
+import { StyleSheet, TouchableOpacity,  Linking, Platform, Alert, Text } from 'react-native';
 
 const isSaveButtonDisabled = (selectedCode, userData) => {
     return (userData.name === '' || userData.addr === '' || selectedCode === undefined );
@@ -26,6 +26,7 @@ const SendButton = (props) =>{
             }
         }}
         disabled={isSaveButtonDisabled(selectedCode, userData)}>
+             <Text style={styles.btnText}>ΑΠΟΣΤΟΛΗ</Text>
     </TouchableOpacity>
   )
 }
