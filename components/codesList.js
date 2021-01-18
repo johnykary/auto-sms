@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const CodesList = ({code, selectCode}) =>{
   return(
-      <TouchableOpacity style={[styles.button] , {backgroundColor: code.selected ? '#3FBF3F' : '#ffff'}} onPress = {() => {selectCode(code.id)}}>
-        <View style={styles.listItemView}>
+      <TouchableOpacity style={[styles.button , {backgroundColor: code.selected ? '#fff9b8' : '#ffff'}]} onPress = {() => {selectCode(code.id)}}>
+        <View >
             <Text style={styles.listItemText}>{code.text}</Text>
         </View>
       </TouchableOpacity>
@@ -15,10 +15,9 @@ const CodesList = ({code, selectCode}) =>{
 const styles = StyleSheet.create({
     button: {
         padding: 15,
-        borderBottomWidth: 1,
-        borderColor: '#eee',
-        backgroundColor:'#ffff'
-      },
+        borderWidth: 5,
+        borderColor: '#eee'
+    },
     listItemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',

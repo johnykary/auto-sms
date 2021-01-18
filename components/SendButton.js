@@ -35,7 +35,7 @@ const SendButton = (props) =>{
 
 const styles = StyleSheet.create({
     saveBtn:{
-        backgroundColor: '#ffad33',
+        backgroundColor: '#8a0831',
         padding: 15,
         margin: 5
       },
