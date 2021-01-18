@@ -19,10 +19,23 @@ const UsersDataPlacehoder = ({saveInfo, userData}) =>{
     return name === '' || addr === ''
   }
 
+
   return(
     <View >
-      <TextInput placeholder='Ονοματεπώνυμο' style={styles.nameInput} onChangeText = {onChangeName} defaultValue={userData.name}></TextInput>
-      <TextInput placeholder='Διεύθυνση' style={styles.streetInput} onChangeText = {onChangeAddr} defaultValue={userData.addr}></TextInput>
+      <TextInput 
+        placeholder='Ονοματεπώνυμο'
+        style={styles.nameInput}
+        onChangeText = {onChangeName}
+        clearTextOnFocus = {true}  
+        defaultValue = {userData.name !== '' ? userData.name : name}
+        ></TextInput>
+      <TextInput 
+        placeholder='Διεύθυνση'
+        style={styles.streetInput} 
+        onChangeText = {onChangeAddr}
+        clearTextOnFocus = {true}  
+        defaultValue = {userData.addr !== '' ? userData.addr : addr}
+        ></TextInput>
       <TouchableOpacity 
         style={[styles.btn, , { opacity: isDisabled() ? 0.3 : 1 }]}
         onPress = {() => saveInfo({

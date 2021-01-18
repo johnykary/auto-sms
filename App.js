@@ -24,6 +24,30 @@ const App = () =>{
   const [selectedCode, setSelectedCode] = useState();
 
 
+  useEffect(() => {
+    const checkAsync = async () => {
+        const value = await AsyncStorage.getItem('@storage_1')
+        if (value !== undefined && value !== null){
+          setUserData(JSON.parse(value))
+        } else {
+          setUserData({
+            name: '',
+            addr: ''
+          })
+        }
+    }
+    checkAsync()
+  }, [])
+
+  const saveData = async (userData) => {
+    try {
+      await AsyncStorage.setItem('@storage_1', JSON.stringify(userData))
+      alert('Data successfully saved')
+    } catch (e) {
+      alert('Failed to save the data to the storage')
+    }
+  }
+
   const selectCode = id =>{
     setSelectedCode(id)
 
@@ -39,40 +63,6 @@ const App = () =>{
   }
 
   
-  //Save UserData
-  const storeData = async (userData) => {
-    try {
-      const jsonUserData = JSON.stringify(userData)
-
-      //Update if exists or set
-      const update = await AsyncStorage.mergeItem('@storage_Key2', jsonUserData);
-      if(update === null){
-        await AsyncStorage.setItem('@storage_Key2', jsonUserData)
-      }
-    } catch (e) {
-      // saving error
-    }
-  }
-
-  //Retrive UserData
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@storage_Key2');
-      if(jsonValue){
-        setUserData(jsonValue);
-      }
-    } catch(e) {
-      // error reading value
-    }
-  }
-
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-
-  
   const saveInfo = async (userInfo) => {
     if(!userInfo){
       console.log('empty')
@@ -81,7 +71,7 @@ const App = () =>{
       userData.name = userInfo.name;
       userData.addr = userInfo.addr;
     
-      await storeData(userData);
+      await saveData(userData);
 
       setUserData(userData)
     }
